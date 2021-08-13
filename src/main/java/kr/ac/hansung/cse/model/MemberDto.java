@@ -9,8 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+
 public class MemberDto {
-	private Long Lid;
+	
 	
 	@Size(min=6,max=15,message="id는 최소6글자 최대15글자로 적어주세요")
 	private String id;

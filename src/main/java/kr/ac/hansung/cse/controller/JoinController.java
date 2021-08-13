@@ -3,6 +3,7 @@ package kr.ac.hansung.cse.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import kr.ac.hansung.cse.service.UserDetailsServiceImp;
 public class JoinController {
 	
 	@Autowired
+	@Qualifier("userDetailsService")
 	private UserDetailsServiceImp userService;
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)

@@ -20,13 +20,18 @@
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value = "/products"/>">Products</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value = "/admin"/>">Admin</a>
-				</li>
-				
+					href="<c:url value = "/admin"/>">Admin</a></li>
+
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value = "/login"/>">Login</a>
-				</li>
+					href="<c:url value = "/login"/>">Login</a></li>
+
+				<c:if test="${pageContext.request.userPrincipal.name!=null}">
+				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/logout"/>">Logout</a></li>
+				</c:if>
+				
 			</ul>
+			
 			<form class="form-inline mt-2 mt-md-0">
 				<input class="form-control mr-sm-2" type="text" placeholder="Search"
 					aria-label="Search">

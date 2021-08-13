@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -39,11 +40,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").permitAll()
 				.anyRequest().authenticated().and().formLogin()// Form 로그인 인증 기능이 작동함
 				.loginPage("/login.jsp")// 사용자 정의 로그인 페이지
-				.defaultSuccessUrl("/home")// 로그인 성공 후 이동 페이지
+				.defaultSuccessUrl("/")// 로그인 성공 후 이동 페이지
 				.failureUrl("/login?error")// 로그인 실패 후 이동 페이지
 				.usernameParameter("username")// 아이디 파라미터명 설정
 				.passwordParameter("password")// 패스워드 파라미터명 설정
-				.loginProcessingUrl("/login");// 로그인 Form Action Url
+				.loginProcessingUrl("/login")// 로그인 Form Action Url
+				.and()
+				.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/")
+				.invalidateHttpSession(true);
+				
+				
+		
 
 	}
 

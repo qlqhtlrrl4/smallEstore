@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,7 @@ import kr.ac.hansung.cse.model.Product;
 @Transactional // method들이 transaction으로 수행된다-> begin transaction / commit --> aop의해서 자동적으로 
 public class ProductDao {
 	
-	@Autowired
+	/*@Autowired*/
 	private SessionFactory sessionFactory; //SessionFactory hibernate에 고유함
 
 	public Product getProduct(int id) {

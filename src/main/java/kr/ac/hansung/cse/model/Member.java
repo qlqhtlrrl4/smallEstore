@@ -4,14 +4,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -34,14 +31,12 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Member implements UserDetails {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Lid;
+	private int Lid;
 
 	@Column(name = "user_id", nullable = false, updatable = false, unique = true)
 	//@Size(min = 6, max = 15, message = "id는 최소6글자 최대15글자로 적어주세요")
@@ -62,9 +57,9 @@ public class Member implements UserDetails {
 	private String name;
 	private String auth;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "role_id")
-	private Role role;
+	/*@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "role")
+	private Role role;*/
 	
 	@Builder
 	public Member(String id, String email, String password, String name, String auth) {
@@ -109,53 +104,5 @@ public class Member implements UserDetails {
 		return true;
 	}
 
-	/*
-	 * @Id private String username; private String password;
-	 * 
-	 * @OneToMany(mappedBy = "user") private List<Role> authorities = new
-	 * ArrayList<>();
-	 * 
-	 * @Override public Collection<? extends GrantedAuthority> getAuthorities() {
-	 * 
-	 * GrantedAuthority grantedAuthority = new GrantedAuthority() {
-	 * 
-	 * @Override public String getAuthority() { return "ROLE_USER"; } }; ArrayList
-	 * list = new ArrayList(); list.add(grantedAuthority);
-	 * 
-	 * return authorities; }
-	 * 
-	 * @Override public String getPassword() { return password; }
-	 * 
-	 * @Override public String getUsername() { return username; }
-	 * 
-	 * @Override public boolean isAccountNonExpired() { return true; }
-	 * 
-	 * @Override public boolean isAccountNonLocked() { return true; }
-	 * 
-	 * @Override public boolean isCredentialsNonExpired() { return true; }
-	 * 
-	 * @Override public boolean isEnabled() { return true; }
-	 * 
-	 * public void setAuthorities(Collection<? extends GrantedAuthority>
-	 * authorities) { this.authorities = (List<Role>) authorities; }
-	 */
-
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue private Long lid; private String id; private String username;
-	 * private String password;
-	 * 
-	 * @Column(name="mail", unique = true) private String mail; private boolean
-	 * accountNonExpired; private boolean accountNonLocked; private boolean
-	 * credentialNonExpired; private boolean enabled;
-	 * 
-	 * @OneToMany(mappedBy = "member") private List<Role> roleList = new
-	 * ArrayList<>();
-	 * 
-	 * public Member(String id) { this.id = id; }
-	 * 
-	 * public static Member from(String id){ return new Member(id); }
-	 */
 
 }
