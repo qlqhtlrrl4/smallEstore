@@ -14,6 +14,7 @@ public class LoginController {
 
 		if (error != null) {
 			model.addAttribute("errorMsg", "Invalid username and password");
+			
 		}
 		
 		if (logout != null) {

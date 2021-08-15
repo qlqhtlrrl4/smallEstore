@@ -1,6 +1,6 @@
 package kr.ac.hansung.cse.service;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,9 +8,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import kr.ac.hansung.cse.model.Member;
-import kr.ac.hansung.cse.model.MemberDto;
+import kr.ac.hansung.cse.filter.Member;
+import kr.ac.hansung.cse.filter.MemberDto;
 import kr.ac.hansung.cse.repository.UserRepository;
 
 @ComponentScan("kr.ac.hansung.cse.config")
@@ -27,12 +28,27 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
 	@Override
 	public Member loadUserByUsername(String id) throws UsernameNotFoundException {
-
+		
+		System.out.println(userDao.findById(id));
 		return userDao.findById(id).orElseThrow(() -> new UsernameNotFoundException(id));
 	}
 	
-	@Transactional
-	public void save(MemberDto memberDto) {
+	@Transactional("jpatransactionManager")
+	public int save(MemberDto memberDto) {
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		memberDto.setPassword(encoder.encode(memberDto.getPassword()));
+		
+		//String id, String email, String password, String name, String auth
+		return userDao.save(Member.builder()
+				.id(memberDto.getId())
+				.email(memberDto.getEmail())
+				.password(memberDto.getPassword())
+				.name(memberDto.getName())
+				.auth(memberDto.getAuth()).build()).getLid();
+				
+	}
+/*	public void save(MemberDto memberDto) {
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		memberDto.setPassword(encoder.encode(memberDto.getPassword()));
@@ -49,6 +65,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
 		System.out.println(member);
 
 		userDao.save(member);
-
-	}
+	*/
+	
 }
