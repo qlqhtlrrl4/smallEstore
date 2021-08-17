@@ -1,19 +1,16 @@
 package kr.ac.hansung.cse.domain;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,13 +25,11 @@ import lombok.ToString;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member implements UserDetails {
-
-	
-	private static final long serialVersionUID = 1L;
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int Lid;
 
 	@Column(name = "user_id", nullable = false, updatable = false, unique = true)
@@ -46,8 +41,10 @@ public class Member implements UserDetails {
 
 	
 	private String name;
-	private String auth;
 	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval=true)
+	private Set<Role> roles;
 	/*@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "role")
 	private Role role;*/
@@ -61,7 +58,7 @@ public class Member implements UserDetails {
 		this.auth = auth;
 	}*/
 
-	@Override
+	/*@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> roles = new HashSet<>();
 	    for (String role : auth.split(",")) {
@@ -69,9 +66,9 @@ public class Member implements UserDetails {
 	    }
 	    return roles;
 		
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public String getUsername() { // TODO Auto-generated method stub
 		return id;
 	}
@@ -94,7 +91,7 @@ public class Member implements UserDetails {
 	@Override
 	public boolean isEnabled() { // TODO Auto-generated method stub
 		return true;
-	}
+	}*/
 
 
 }

@@ -4,12 +4,12 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kr.ac.hansung.cse.domain.Member;
+import kr.ac.hansung.cse.domain.User;
 
 
-public interface UserDao extends JpaRepository<Member, Long>{
+public interface UserDao extends JpaRepository<User, Long>{
 	
-	Optional<Member> findById(String id);
+	Optional<User> findById(String id);
 
 	
 }

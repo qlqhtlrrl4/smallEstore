@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import kr.ac.hansung.cse.domain.MemberDto;
+import kr.ac.hansung.cse.domain.UserDto;
 import kr.ac.hansung.cse.service.UserDetailsServiceImp;
 
 @Controller
@@ -24,7 +24,7 @@ public class JoinController {
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String doJoin(Model model) {
 
-		MemberDto userInfomation = new MemberDto();
+		UserDto userInfomation = new UserDto();
 		model.addAttribute("userInfomation", userInfomation);
 		
 
@@ -32,7 +32,7 @@ public class JoinController {
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String doJoin(@ModelAttribute("userInfomation")@Valid MemberDto userInfomation, BindingResult result) {
+	public String doJoin(@ModelAttribute("userInfomation")@Valid UserDto userInfomation, BindingResult result) {
 		
 		if(result.hasErrors()) {
 			return "join";
