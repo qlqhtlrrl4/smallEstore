@@ -1,4 +1,4 @@
-package kr.ac.hansung.cse.model;
+package kr.ac.hansung.cse.domain;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

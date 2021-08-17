@@ -36,7 +36,7 @@
 		<property name ="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">false</prop>
 			</props>
@@ -46,15 +46,13 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	
-	<jpa:repositories base-package="kr.ac.hansung.cse.repository"></jpa:repositories>
+	<jpa:repositories base-package="kr.ac.hansung.cse.repository" entity-manager-factory-ref="entityManagerFactory"
+	transaction-manager-ref="jpatransactionManager"></jpa:repositories>
 	
 	 <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
-	<!--
-	 <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-	 -->
 	<!--  -->
 	<bean id="jpadataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName"
@@ -63,22 +61,19 @@
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>
-	
-	
-	
-    
+  
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
     
      <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="jpadataSource" />
-    	<property name="packagesToScan" value="kr.ac.hansung.cse.filter" />
+    	<property name="packagesToScan" value="kr.ac.hansung.cse.domain" />
     	<property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
         <property name ="jpaProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">false</prop>
 			</props>

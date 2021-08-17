@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import kr.ac.hansung.cse.model.Member;
+import kr.ac.hansung.cse.domain.Member;
 
 
 public interface UserDao extends JpaRepository<Member, Long>{

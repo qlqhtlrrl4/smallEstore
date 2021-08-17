@@ -2,16 +2,19 @@ package kr.ac.hansung.cse.service;
 
 
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.ac.hansung.cse.filter.Member;
-import kr.ac.hansung.cse.filter.MemberDto;
+import kr.ac.hansung.cse.domain.Member;
+import kr.ac.hansung.cse.domain.MemberDto;
 import kr.ac.hansung.cse.repository.UserRepository;
 
 @ComponentScan("kr.ac.hansung.cse.config")
@@ -19,36 +22,88 @@ import kr.ac.hansung.cse.repository.UserRepository;
 public class UserDetailsServiceImp implements UserDetailsService {
 
 	@Autowired
-	private UserRepository userDao;
+	private UserRepository userRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
-	/*
-	 * @Autowired(required=false) private void setUserRepository(UserRepository
-	 * userDao) { this.userDao = userDao; }
-	 */
 
 	@Override
-	public Member loadUserByUsername(String id) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		
-		System.out.println(userDao.findById(id));
-		return userDao.findById(id).orElseThrow(() -> new UsernameNotFoundException(id));
+		System.out.println(userRepository.findById(id));
+		
+		/*Optional<Member> member = userDao.findById(id);
+		System.out.println(member);
+		
+		UserBuilder builder = null;
+		
+		if(member != null) {
+			builder = org.springframework.security.core.userdetails.User.withUsername(id);
+			builder.authorities(member.get().getAuthorities());
+			
+			builder.password(member.get().getPassword());
+			System.out.println(member.get().getAuthorities());
+		}
+		else {
+			new UsernameNotFoundException("User not found.");
+		}
+		return builder.build();*/
+		
+		return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(id));
 	}
 	
 	@Transactional("jpatransactionManager")
-	public int save(MemberDto memberDto) {
+	public void save(MemberDto memberDto) {
 		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		memberDto.setPassword(encoder.encode(memberDto.getPassword()));
 		
+		Member member = new Member();
+		member.setPassword(memberDto.getPassword());
+		member.setId(memberDto.getId());
+		member.setAuth(memberDto.getAuth());
+		member.setEmail(memberDto.getEmail());
+		member.setName(memberDto.getName());
+		userRepository.save(member);
+		
+		
+		
 		//String id, String email, String password, String name, String auth
-		return userDao.save(Member.builder()
+		/*return userRepository.save(Member.builder()
 				.id(memberDto.getId())
 				.email(memberDto.getEmail())
 				.password(memberDto.getPassword())
 				.name(memberDto.getName())
-				.auth(memberDto.getAuth()).build()).getLid();
+				.auth(memberDto.getAuth()).build()).getLid();*/
+		
+		
 				
 	}
-/*	public void save(MemberDto memberDto) {
+	
+	@PostConstruct
+	@Transactional("jpatransactionManager")
+	public void initialize() {
+		Member admin = userRepository.findAdmin("admin");
+		
+		String password = encoder.encode("123456789");
+		
+		if(admin == null) {
+			
+//			admin = new Member("admin", "admin@test.com", password, "admin", "USER_ADMIN");
+//			userDao.save(admin);
+			
+			admin = new Member();
+			admin.setId("admin");
+			admin.setEmail("admin@test");
+			admin.setAuth("ROLE_ADMIN");
+			admin.setName("admin");
+			admin.setPassword(password);
+			System.out.println(admin);
+			userRepository.save(admin);
+			
+		}
+	}
+	/*	public void save(MemberDto memberDto) {
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		memberDto.setPassword(encoder.encode(memberDto.getPassword()));
