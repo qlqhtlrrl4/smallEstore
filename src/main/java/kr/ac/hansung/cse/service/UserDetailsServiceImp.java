@@ -39,7 +39,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
 		System.out.println(userRepository.findById(id));
-
+		
 		User user = userRepository.findById(id);
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		for (Role role : user.getRoles()) {
@@ -66,13 +66,6 @@ public class UserDetailsServiceImp implements UserDetailsService {
 		role.setUser(member);
 		role.setRole("ROLE_USER");
 		roleRepository.save(role);
-
-		// String id, String email, String password, String name, String auth
-		/*
-		 * return userRepository.save(Member.builder() .id(memberDto.getId())
-		 * .email(memberDto.getEmail()) .password(memberDto.getPassword())
-		 * .name(memberDto.getName()) .auth(memberDto.getAuth()).build()).getLid();
-		 */
 
 	}
 
