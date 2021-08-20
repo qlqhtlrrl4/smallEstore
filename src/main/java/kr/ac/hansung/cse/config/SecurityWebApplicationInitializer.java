@@ -8,3 +8,4 @@ public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplic
         super(WebSecurityConfig.class);
     } */
 }
+

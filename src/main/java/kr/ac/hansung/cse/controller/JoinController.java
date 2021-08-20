@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.ac.hansung.cse.domain.UserDto;
-import kr.ac.hansung.cse.service.UserDetailsServiceImp;
+import kr.ac.hansung.cse.service.CustomUserDetailsService;
 
 @Controller
 public class JoinController {
 	
 	@Autowired
 	@Qualifier("userDetailsService")
-	private UserDetailsServiceImp userService;
+	private CustomUserDetailsService userService;
 	
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String doJoin(Model model) {
