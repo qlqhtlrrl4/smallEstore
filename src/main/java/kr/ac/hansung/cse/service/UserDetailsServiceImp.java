@@ -35,7 +35,7 @@ public class UserDetailsServiceImp implements CustomUserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
-		System.out.println(userRepository.findById(id));
+		
 		
 		User user = userRepository.findById(id);
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
@@ -81,7 +81,6 @@ public class UserDetailsServiceImp implements CustomUserDetailsService {
 
 			admin.setName("admin");
 			admin.setPassword(password);
-			System.out.println(admin);
 			userRepository.save(admin);
 
 			Role role = new Role();

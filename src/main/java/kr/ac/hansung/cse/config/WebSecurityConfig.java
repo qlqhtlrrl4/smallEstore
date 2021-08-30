@@ -29,20 +29,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		//System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
 		
 		CharacterEncodingFilter filter = new CharacterEncodingFilter();
 		filter.setEncoding("UTF-8");
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter, CsrfFilter.class);
 		
-
+		http.csrf().disable();
+		
 		http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')").antMatchers("/**").permitAll()
 				.antMatchers("/").permitAll()
 				.anyRequest().authenticated().and().formLogin()// Form 로그인 인증 기능이 작동함
@@ -52,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("username")// 아이디 파라미터명 설정
 				.passwordParameter("password")// 패스워드 파라미터명 설정
 				.loginProcessingUrl("/login")// 로그인 Form Action Url
+				
 				.and()
 				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

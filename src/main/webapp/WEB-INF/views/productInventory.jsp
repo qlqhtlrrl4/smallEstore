@@ -1,25 +1,29 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>	
 
 <div class="container-wrapper">
 	<div class="container">
-		<h2>Product Inventory</h2>
-		<p>제품 제고 현황입니다.</p>
+		<h2><spring:message code="product.name" /></h2>
+		<p><spring:message code="productInventory.Info" /></p>
+		
+		
 		<table class="table table-striped">
 			<thead>
 				<tr class="bg-success">
-					<th>Name</th>
-					<th>Category</th>
-					<th>Price</th>
-					<th>Manufacture</th>
-					<th>UnitInStock</th>
-					<th>Description</th>
+					<th><spring:message code="product.name" /></th>
+					<th><spring:message code="product.category" /></th>
+					<th><spring:message code="product.price" /></th>
+					<th><spring:message code="product.manufacture" /></th>
+					<th><spring:message code="product.unitInstock" /></th>
+					<th><spring:message code="product.description" /></th>
 					<th> </th>
 
 				</tr>
 			</thead>
 			<tbody>
+			
 				<c:forEach var="product" items="${products}">
 					<tr>
 						<td>${product.name}</td>

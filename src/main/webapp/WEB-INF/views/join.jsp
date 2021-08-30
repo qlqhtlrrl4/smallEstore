@@ -3,6 +3,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<link rel="icon" type="image/png" href="http://example.com/myicon.png"> 
+
+<script>
+
+function audio() {
+	var rand = Math.random();
+
+	var uAgent = navigator.userAgent;
+	var soundUrl = '${pageContext.request.contextPath}/captchaAudio?rand = '+rand;
+	
+	if(uAgent.indexOf('Trident')>-1 || uAgent.indexOf('MSIE') > -1) {
+		winPlayer(soundUrl);
+	}
+	else if(document.createElement('audio').canPlayType) {
+		try {
+			new Audio(soundUrl).play();
+		}catch(e) {
+			winPlayer(soundUrl);
+		}
+	}
+}
+/* function checkRecaptcha() {
+	
+	var data = {
+			'data' : document.getElementById("answer")
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/answer",
+		dataType : "json",
+		data : JSON.stringify(data),
+		contentType : "application/json",
+		type : "POST",
+		async : false,
+		
+		success : function(data) {
+			
+			
+			
+			if(data == "ok") {
+				return true;
+			}
+			else {
+				return false;
+			}
+			
+		}
+
+	});	
+} */
+
+function refreshBtn() {
+	var rand = Math.random();
+	var url = 'captchaImg?rand = '+rand;
+	$('#captchaImg').attr('src',url);
+}
+
+function winPlayer(objUrl) {
+	$('#captchaAudio').html('<bgsound src "'+objUrl+'">');
+}
+
+
+</script>
+
+ <!-- onsubmit="return checkRecaptcha()" -->
 
 <div class="container-wrapper">
 	<div class="container">
@@ -21,12 +86,6 @@
 			</div>
 
 
-			<%-- <div class="form-group">
-				<label for="enabled"></label>
-				<sf:hidden path="enabled" id="enabled"
-					class="form-control" />
-			</div> --%>
-
 			<div class="form-group">
 				<label for="password">password</label>
 				<sf:password path="password" id="password" class="form-control" />
@@ -44,17 +103,32 @@
 				<sf:input path="name" id="name" class="form-control" />
 				<sf:errors path="name" cssStyle="color:#ff0000;" />
 			</div>
-
-			<%-- <div class="form-group">
-				<label for="userRole"></label>
-				<sf:hidden path="userRole" id="userRole" class="form-control" />
+			
+			<div class="form-group">
+				<label for="captcha">자동 로그인 방지</label><br>
+				<img id = "captchaImg" src="/captchaImg" alt="캡차이미지"/> 
+				<div id="captchaAudio" style="display:none"></div> 
+			</div>
+			
+			<div class="form-group">
+				<a onclick = "javascript:refreshBtn()" class = "refreshBtn">
+				<input type="button" value="refresh"/>
+				</a>
+				<a onclick = "javascript:audio()" class = "refreshBtn">
+				<input type="button" value="listen"/>
+				</a>
 				
-			</div> --%>
-
+			</div>
+			<div class = "form-group"> 
+				<input type="text" name = "answer" id ="answer" class = "form-control">
+			
+			</div>
+			
 			<input type="submit" value="submit" class="btn btn-default">
-			<a href="<c:url value="/login" />"
-				class="btn btn-default">Cancel</a>
+			<a href="<c:url value="/login" />" class="btn btn-default">Cancel</a>
 		</sf:form>
+			
 		<br />
+
 	</div>
 </div>

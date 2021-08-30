@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <header>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -14,28 +14,43 @@
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link"
-					href="<c:url value="/"/>">Home <span class="sr-only">(current)</span></a>
+					href="<c:url value="/"/>"> Home <span class="sr-only">(current)</span></a>
 				</li>
 
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value = "/products"/>">Products</a></li>
+					href="<c:url value = "/products"/>"><spring:message code="menu.product" /></a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="<c:url value = "/admin"/>">Admin</a></li>
-
-				<li class="nav-item"><a class="nav-link"
-					href="<c:url value = "/login"/>">Login</a></li>
-
-				<c:if test="${pageContext.request.userPrincipal.name!=null}">
-				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/logout"/>">Logout</a></li>
-				</c:if>
+					href="<c:url value = "/admin"/>"><spring:message code="menu.admin" /></a></li>
 				
+				<c:if test="${pageContext.request.userPrincipal.name==null}">
+				
+				<li class="nav-item"><a class="nav-link"
+					href="<c:url value = "/login"/>"><spring:message code="menu.login" /></a></li>
+				</c:if>
+				<c:if test="${pageContext.request.userPrincipal.name!=null}">
+					<li class="nav-item"><a class="nav-link"
+						href="<c:url value="/logout"/>"><spring:message code="menu.logout" /></a></li>
+				</c:if>
+
 			</ul>
-			
+
 			<form class="form-inline mt-2 mt-md-0">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search"
-					aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				<div class="dropdown">
+					<button class="btn btn-danger dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						<spring:message code="app.lang.title" />
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+
+						<a class="dropdown-item" href="?lang=en"><spring:message
+								code="app.lang.english" /></a> <a class="dropdown-item"
+							href="?lang=ko"><spring:message code="app.lang.korea" /></a>
+
+
+					</div>
+				</div>
 			</form>
 		</div>
 	</nav>

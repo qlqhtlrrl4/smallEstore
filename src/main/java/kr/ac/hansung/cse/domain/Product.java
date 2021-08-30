@@ -1,4 +1,4 @@
-package kr.ac.hansung.cse.model;
+package kr.ac.hansung.cse.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,17 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
-
+@NoArgsConstructor
 @Entity
 @Table(name="product")
 public class Product {
@@ -26,23 +25,30 @@ public class Product {
 	@Column(name="product_id", nullable=false , updatable=false)
 	private int id;
 	
-	@NotEmpty(message="The product name must not be null")
+	//@NotEmpty(message="상품이름은 빈칸이면 안됩니다")
 	private String name;
 	
+	private String en_name;
 	
 	private String category;
 	
-	@Min(value=0, message="The product price must not be less than zero")
+	private String en_category;
+	
+	//@Min(value=0, message="The product price must not be less than zero")
 	private int price;
 	
-	@NotEmpty(message="The product name must not be null")
+	//@NotEmpty(message="The product name must not be null")
 	private String manufacture;
 	
-	@Min(value=0, message="The product price must not be less than zero")
+	private String en_manufacture;
+	
+	//@Min(value=0, message="The product price must not be less than zero")
 	private int unitInStock;
 	
 	private String description;
 	
+	private String en_description;
+	
 	//hibernate = jpa+ native (entity는 javax.persistence에 있는)
-
+	
 }

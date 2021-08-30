@@ -1,24 +1,30 @@
+<%@ page import= "java.util.*" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
+
 <div class="container-wrapper">
 	<div class="container">
-		<h2>All Products</h2>
-		<p>착한 가격으로 상품을 살펴보세요.</p>
+		<h2><spring:message code="product.title" /></h2>
+		<p>${param.lang}</p>
+		
 		<table class="table table-striped">
 			<thead>
 				<tr class="bg-success">
-					<th>Name</th>
-					<th>Category</th>
-					<th>Price</th>
-					<th>Manufacture</th>
-					<th>UnitInStock</th>
-					<th>Description</th>
+					<th><spring:message code="product.name" /></th>
+					<th><spring:message code="product.category" /></th>
+					<th><spring:message code="product.price" /></th>
+					<th><spring:message code="product.manufacture" /></th>
+					<th><spring:message code="product.unitInstock" /></th>
+					<th><spring:message code="product.description" /></th>
 
 				</tr>
 			</thead>
 			<tbody>
+			
 				<c:forEach var="product" items="${products}">
 					<tr>
 						<td>${product.name}</td>
@@ -27,9 +33,11 @@
 						<td>${product.manufacture }</td>
 						<td>${product.unitInStock }</td>
 						<td>${product.description }</td>
+						
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
 </div>
+	
