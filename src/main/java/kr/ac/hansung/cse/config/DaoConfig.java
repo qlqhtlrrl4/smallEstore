@@ -37,6 +37,10 @@ public class DaoConfig {
 		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
 		prop.put("hibernate.show_sql", "true");
 		prop.put("hibernate.format_sql", "false");
+		prop.put("hibernate.order_inserts", "true");
+		prop.put("hibernate.order_updates", "true");
+		prop.put("hibernate.jdbc.batch_size", 10);
+		prop.put("hibernate.jdbc.batch_versioned_data", "true");
 
 		return prop;
 	}
@@ -79,5 +83,32 @@ public class DaoConfig {
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
+
+	/*@Bean("transactionManager")
+	public PlatformTransactionManager transactionManager() {
+		return new HibernateTransactionManager((SessionFactory) sessionFactory().getObject());
+	}
+	
+	@Bean("dataSource")
+	public BasicDataSource dataSource() {
+		
+		BasicDataSource ds = new BasicDataSource();
+		ds.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+		ds.setUrl(env.getProperty("jdbc.url"));
+		ds.setUsername(env.getProperty("jdbc.username"));
+		ds.setPassword(env.getProperty("jdbc.password"));
+		
+		return ds;
+	}
+	
+	@Bean("sessionFactory")
+	public LocalSessionFactoryBean sessionFactory() {
+		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource());
+		sessionFactory.setPackagesToScan(new String[] { "kr.ac.hansung.cse.model" });
+		sessionFactory.setHibernateProperties(getHibernateProperties());
+		return sessionFactory;
+	} */
+
 
 }

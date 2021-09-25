@@ -11,12 +11,14 @@
     <put-attribute name="footer" value="/WEB-INF/templates/footer.jsp" />
   </definition>
   
-  <definition name="home" extends="base">
-    <put-attribute name="title" value="My eStore Homepage" />
-    <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+  <definition name="/*.do" extends="base">
+    <put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
   </definition>
   
-   <definition name="products" extends="base">
+  <definition name="/*/*.do" extends="base">
+    <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+  </definition>
+   <!-- <definition name="products" extends="base">
     <put-attribute name="title" value="Products page" />
     <put-attribute name="body" value="/WEB-INF/views/products.jsp" />
   </definition>
@@ -49,6 +51,6 @@
   <definition name="updateProduct" extends="base">
     <put-attribute name="title" value="Update Product Page" />
     <put-attribute name="body" value="/WEB-INF/views/updateProduct.jsp" />
-  </definition>
+  </definition> -->
   
 </tiles-definitions>

@@ -11,14 +11,16 @@ import kr.ac.hansung.cse.domain.Product;
 import kr.ac.hansung.cse.domain.ProductDto;
 import kr.ac.hansung.cse.repository.ProductRepository;
 
+
+
 @Service
 public class ProductService {
-	
+
 	@Autowired
 	private ProductRepository productRepository;
-	
+  
 	@Autowired
-	private TextTrans textTrans;
+	private TextTrans textTrans = new TextTrans();
 	
 	@Transactional("jpatransactionManager")
 	public List<Product> getAllProduct(Locale locale) {
@@ -34,10 +36,14 @@ public class ProductService {
 	@Transactional("jpatransactionManager")
 	public void addProduct(ProductDto productDto, Locale locale) {
 		
-		Product product = new Product();
+		System.out.println(String.valueOf(locale));
+		System.out.println(productDto);
 		
-		if (String.valueOf(locale).equals("ko")) {
+		Product product = new Product();
+		System.out.println(product);
 
+		if (String.valueOf(locale).equals("ko")) {
+			
 			String en_name = textTrans.translateEn(productDto.getName());
 			String en_category = textTrans.translateEn(productDto.getCategory());
 			String en_manufacture = textTrans.translateEn(productDto.getManufacture());
@@ -112,8 +118,12 @@ public class ProductService {
 			product.setCategory(ko_category);
 			product.setDescription(ko_des);
 			product.setManufacture(ko_manufacture);
+
+			System.out.println(product);
 		}
 		
+		
+		System.out.println("save before"+ product);
 		productRepository.save(product);
 
 	}

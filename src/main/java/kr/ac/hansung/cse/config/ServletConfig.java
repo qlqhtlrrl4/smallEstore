@@ -59,7 +59,7 @@ public class ServletConfig implements WebMvcConfigurer {
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-	
+		//System.out.println("asdfsdfdsfsfsdfasdfsadf");
 		localeChangeInterceptor.setParamName("lang");
 		return localeChangeInterceptor;
 	}

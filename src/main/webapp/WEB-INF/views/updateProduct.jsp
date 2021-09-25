@@ -12,7 +12,7 @@
 
 		<!-- modelAttribute의 값과 AdminController의 model.addAttribute("product", .. ) product 값(key)과 일치-->
 		<sf:form
-			action="${pageContext.request.contextPath }/admin/productInventory/updateProduct"
+			action="${pageContext.request.contextPath }/admin/productInventory/updateProduct/${product.id}"
 			method="post" modelAttribute="product">
 			
 			<sf:hidden path="id"/>
@@ -24,19 +24,22 @@
 			</div>
 
 			<div class="form-group">
-				<label for="category"><spring:message code="category" /> </label>
+				<label for="category"><spring:message code="category" /> </label><br>
 				<sf:radiobutton path="category" id="category" value="컴퓨터" />
 				<spring:message code="product.category.computer" />
 				<sf:radiobutton path="category" id="category" value="가전" />
 				<spring:message code="product.category.homeappliances" />
 				<sf:radiobutton path="category" id="category" value="잡화" />
-				<spring:message code="product.category.stuff" />
+				<spring:message code="product.category.stuff" /><br>
+				<sf:errors path="name" cssStyle="color:#ff0000;" />
+				
 			</div>
 
 			<div class="form-group">
 				<label for="description"><spring:message code="product.description" /></label>
 				<sf:textarea path="description" id="description"
 					class="form-control" />
+				<sf:errors path="description" cssStyle="color:#ff0000;" />
 			</div>
 
 			<div class="form-group">

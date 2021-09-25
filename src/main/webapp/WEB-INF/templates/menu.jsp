@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <header>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		<a class="navbar-brand" href="#">Carousel</a>
@@ -19,8 +19,13 @@
 
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value = "/products"/>"><spring:message code="menu.product" /></a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="<c:url value = "/admin"/>"><spring:message code="menu.admin" /></a></li>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<li class="nav-item">
+						<a class="nav-link" href="<c:url value = "/admin"/>"><spring:message code="menu.admin" /></a>
+					</li>
+				</sec:authorize>
+				
+				
 				
 				<c:if test="${pageContext.request.userPrincipal.name==null}">
 				

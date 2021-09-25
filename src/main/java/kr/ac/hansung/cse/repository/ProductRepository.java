@@ -19,5 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			+ "unitInStock, en_description as description,null as en_description"
 			+ " FROM product", nativeQuery = true)
 	List<Product> findAllEn(); 
+	
+	
 		
 }

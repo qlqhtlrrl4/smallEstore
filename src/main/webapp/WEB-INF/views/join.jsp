@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="icon" type="image/png" href="http://example.com/myicon.png"> 
 
@@ -80,32 +81,32 @@ function winPlayer(objUrl) {
 			method="post" modelAttribute="userInfomation">
 
 			<div class="form-group">
-				<label for="id">id:</label>
+				<label for="id"><spring:message code="join.id" /></label>
 				<sf:input path="id" id="id" class="form-control" />
 				<sf:errors path="id" cssStyle="color:#ff0000;" />
 			</div>
 
 
 			<div class="form-group">
-				<label for="password">password</label>
+				<label for="password"><spring:message code="join.password" /></label>
 				<sf:password path="password" id="password" class="form-control" />
 				<sf:errors path="password" cssStyle="color:#ff0000;" />
 			</div>
 
 			<div class="form-group">
-				<label for="email">Email</label>
+				<label for="email"><spring:message code="join.email" /></label>
 				<sf:input path="email" id="email" class="form-control" />
 				<sf:errors path="email" cssStyle="color:#ff0000;" />
 			</div>
 			
 			<div class="form-group">
-				<label for="name">Name</label>
+				<label for="name"><spring:message code="join.name" /></label>
 				<sf:input path="name" id="name" class="form-control" />
 				<sf:errors path="name" cssStyle="color:#ff0000;" />
 			</div>
 			
 			<div class="form-group">
-				<label for="captcha">자동 로그인 방지</label><br>
+				<label for="captchaImg"><spring:message code="join.captcha" /></label><br>
 				<img id = "captchaImg" src="/captchaImg" alt="캡차이미지"/> 
 				<div id="captchaAudio" style="display:none"></div> 
 			</div>
@@ -119,9 +120,15 @@ function winPlayer(objUrl) {
 				</a>
 				
 			</div>
-			<div class = "form-group"> 
-				<input type="text" name = "answer" id ="answer" class = "form-control">
+			<!-- <div class = "form-group"> 
+				<input type="text" name = "answer" class = "form-control">
 			
+			</div> -->
+			
+			<div class="form-group">
+				
+				<sf:input path="answer" class="form-control" />
+				<sf:errors path="answer" cssStyle="color:#ff0000;" />
 			</div>
 			
 			<input type="submit" value="submit" class="btn btn-default">

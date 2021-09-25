@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import kr.ac.hansung.cse.captcha.CaptchaUtil;
 import kr.ac.hansung.cse.domain.UserDto;
 import kr.ac.hansung.cse.service.CustomUserDetailsService;
+import kr.ac.hansung.cse.service.UserDtoValidator;
 
 @Controller
 public class JoinController {
@@ -23,6 +24,9 @@ public class JoinController {
 	@Autowired
 	@Qualifier("userDetailsService")
 	private CustomUserDetailsService userService;
+	
+	@Autowired
+	private UserDtoValidator userDtoValidator = new UserDtoValidator();
 	
 	@Autowired
 	private HttpServletRequest req;
@@ -34,25 +38,22 @@ public class JoinController {
 		model.addAttribute("userInfomation", userInfomation);
 		
 
-		return "join";
+		return "/join.do";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String doJoin(@ModelAttribute("userInfomation")@Valid UserDto userInfomation, BindingResult result) {
-				
+		
+		/*System.out.println(req.getParameter("answer"));
+		System.out.println((String)req.getSession().getAttribute("captcha"));*/
+		userDtoValidator.validate(userInfomation, result);
+		
 		if(result.hasErrors()) {
-			return "join";
-		}
-		else if(!req.getParameter("answer").equals((String)req.getSession().getAttribute("captcha"))) {
-			
-			
-			return "join";
-		}
-		
-		
+			return "/join.do";
+		}	
 		userService.save(userInfomation);
 		
-		return "redirect:/login"; 
+		return "redirect:/login.do"; 
 	
 	}
 	
@@ -68,5 +69,26 @@ public class JoinController {
 		new CaptchaUtil().getAudioCaptCha(req, res);
 	}
 	
+	/*@ResponseBody
+	@RequestMapping(value="/captchaAudio", method=RequestMethod.POST)
+	public void captchaAudio(@RequestBody Audio audio) throws Exception {
+		
+		//System.out.println("audio");
+		System.out.println(audio);
+		//System.out.println("audio");
+//		new CaptchaUtil().getAudioCaptCha(req, res);
+	}*/
 	
+	/*@ResponseBody
+	@RequestMapping(value="/captchaAudio", method=RequestMethod.POST)
+	public String captchaAudio(@RequestBody Answer answer) throws Exception {
+		
+		
+		System.out.println(answer);
+		System.out.println(req.getSession().getAttribute("captcha"));  
+		
+		
+		return "ok";
+
+	}*/
 }

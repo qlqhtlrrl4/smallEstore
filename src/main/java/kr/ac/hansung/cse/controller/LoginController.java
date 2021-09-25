@@ -26,7 +26,7 @@ public class LoginController {
 			model.addAttribute("logoutMsg", "You have been logged out successfully");
 		}
 
-		return "login";
+		return "/login.do";
 	}
 
 }

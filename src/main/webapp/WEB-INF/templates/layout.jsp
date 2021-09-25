@@ -39,13 +39,9 @@
 		<tiles:insertAttribute name="footer" />
 	</div>
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
-	<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+	
 </body>
 </html>
