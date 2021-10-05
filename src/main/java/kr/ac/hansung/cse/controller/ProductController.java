@@ -43,7 +43,8 @@ public class ProductController { // controller-> service-> dao->db
 		List<Map<String, Object>> vaccinList= new ArrayList<>();
 		
 		vaccinList = restService.getVaccinData();
-		System.out.println(vaccinList);
+		
+		//System.out.println(vaccinList);
 		return vaccinList;
 		
 	}
@@ -55,7 +56,25 @@ public class ProductController { // controller-> service-> dao->db
 		List<CovidStatusData> statusDataList = new ArrayList<>();
 		statusDataList = restService.getStatusData();
 		
+		
+		
+		//System.out.println(statusDataList);
+		
 		return statusDataList;
+	}
+	
+	
+	
+	@GetMapping(value="/leastDay", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<Map<String,Object>> leastDay() {
+		
+		List<Map<String,Object>> leastList = new ArrayList<>();
+		
+		leastList = restService.getLeastDay();
+		System.out.println(leastList);
+		
+		return leastList;
 	}
 	
 }

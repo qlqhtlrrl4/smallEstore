@@ -14,11 +14,11 @@ import lombok.Data;
 @Entity
 @TableGenerator(
 		name = "covid_seq_generator",
-		table = "covid_sequence",
+		table = "covidhospital_sequence",
 		pkColumnValue = "covid_seq",
 		valueColumnName = "next_val",
-		allocationSize = 1)
-@Table(name = "covid")
+		allocationSize = 1000)
+@Table(name="covidhospital")
 public class CovidData {
 	
 	@GeneratedValue(strategy=GenerationType.TABLE, generator = "covid_seq_generator")

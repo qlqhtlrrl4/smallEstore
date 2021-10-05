@@ -4,7 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<script type="text/javascript" src="./js/common.js"></script>
 
 <%-- <div class="container-wrapper">
 	<div class="container">
@@ -44,40 +43,40 @@
 </div> --%>
 
 <script>
-	$(document).ready(
-			function() {
+	$(document).ready(function() {
 
-				$.ajax({
+		$.ajax({
 
-					url : '/covid',
-					type : 'get',
-					dataType : 'json',
+			url : '/covid',
+			type : 'get',
+			dataType : 'json',
 
-					success : function(data) {
-						
-						//var jsonArray = new Array();
-						
-						console.log(data)
-						
-						
-						amChart(data);
-					}
+			success : function(data) {
 
-				});
+				//var jsonArray = new Array();
+
+				//console.log(data)
+
+				amChart(data);
+			}
+
+		});
+
+		$.ajax({
+
+			url : '/covidstatus',
+			type : 'get',
+			dataType : 'json',
+
+			success : function(data) {
+				console.log(data);
 				
-				$.ajax({
-					
-					url : '/covidstatus',
-					type : 'get',
-					dataType : 'json',
-					
-					success : function(data) {
-						pieChart(data);
-					}
-					
-				});
+				pieChart(data);
+			}
 
-			});
+		});
+
+	});
 </script>
 
 
@@ -97,61 +96,60 @@
 <!-- Chart code -->
 <script>
 	function amChart(data) {
-	am4core.ready(function() {
+		am4core.ready(function() {
 
-		// Themes begin
-		am4core.useTheme(am4themes_animated);
-		// Themes end
+			// Themes begin
+			am4core.useTheme(am4themes_animated);
+			// Themes end
 
-		var chart = am4core.create("chartdiv", am4charts.XYChart);
-		chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-		
-		chart.data = data;
-		
-		
-		var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-		categoryAxis.renderer.grid.template.location = 0;
-		categoryAxis.dataFields.category = "sido";
-		categoryAxis.renderer.minGridDistance = 40;
-		categoryAxis.fontSize = 11;
+			var chart = am4core.create("chartdiv", am4charts.XYChart);
+			chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
-		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-		valueAxis.min = 0;
-		valueAxis.max = 600000;
-		valueAxis.strictMinMax = true;
-		valueAxis.renderer.minGridDistance = 30;
-		// axis break
-		var axisBreak = valueAxis.axisBreaks.create();
-		axisBreak.startValue = 110000;
-		axisBreak.endValue = 500000;
-		//axisBreak.breakSize = 0.005;
+			chart.data = data;
 
-		// fixed axis break
-		var d = (axisBreak.endValue - axisBreak.startValue)
-				/ (valueAxis.max - valueAxis.min);
-		axisBreak.breakSize = 0.1 * (1 - d) / d;
+			var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+			categoryAxis.renderer.grid.template.location = 0;
+			categoryAxis.dataFields.category = "sido";
+			categoryAxis.renderer.minGridDistance = 40;
+			categoryAxis.fontSize = 11;
 
-		// make break expand on hover
-		var hoverState = axisBreak.states.create("hover");
-		hoverState.properties.breakSize = 1;
-		hoverState.properties.opacity = 0.1;
-		hoverState.transitionDuration = 1500;
+			var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+			valueAxis.min = 0;
+			valueAxis.max = 600000;
+			valueAxis.strictMinMax = true;
+			valueAxis.renderer.minGridDistance = 30;
+			// axis break
+			var axisBreak = valueAxis.axisBreaks.create();
+			axisBreak.startValue = 110000;
+			axisBreak.endValue = 500000;
+			//axisBreak.breakSize = 0.005;
 
-		axisBreak.defaultState.transitionDuration = 1000;
+			// fixed axis break
+			var d = (axisBreak.endValue - axisBreak.startValue)
+					/ (valueAxis.max - valueAxis.min);
+			axisBreak.breakSize = 0.1 * (1 - d) / d;
 
-		var series = chart.series.push(new am4charts.ColumnSeries());
-		series.dataFields.categoryX = "sido";
-		series.dataFields.valueY = "accumulatedFirstCnt";
-		series.columns.template.tooltipText = "{valueY.value}";
-		series.columns.template.tooltipY = 0;
-		series.columns.template.strokeOpacity = 0;
+			// make break expand on hover
+			var hoverState = axisBreak.states.create("hover");
+			hoverState.properties.breakSize = 1;
+			hoverState.properties.opacity = 0.1;
+			hoverState.transitionDuration = 1500;
 
-		// as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
-		series.columns.template.adapter.add("fill", function(fill, target) {
-			return chart.colors.getIndex(target.dataItem.index);
-		});
+			axisBreak.defaultState.transitionDuration = 1000;
 
-	}); // end am4core.ready()
+			var series = chart.series.push(new am4charts.ColumnSeries());
+			series.dataFields.categoryX = "sido";
+			series.dataFields.valueY = "accumulatedFirstCnt";
+			series.columns.template.tooltipText = "{valueY.value}";
+			series.columns.template.tooltipY = 0;
+			series.columns.template.strokeOpacity = 0;
+
+			// as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
+			series.columns.template.adapter.add("fill", function(fill, target) {
+				return chart.colors.getIndex(target.dataItem.index);
+			});
+
+		}); // end am4core.ready()
 	}
 </script>
 
@@ -175,38 +173,38 @@
 
 <!-- Chart code -->
 <script>
-function pieChart(data) {
-	
-am4core.ready(function() {
+	function pieChart(data) {
 
-// Themes begin
-am4core.useTheme(am4themes_animated);
-// Themes end
+		am4core.ready(function() {
 
-// Create chart instance
-var chart = am4core.create("chartdiv", am4charts.PieChart);
+			// Themes begin
+			am4core.useTheme(am4themes_animated);
+			// Themes end
 
-// Add data
-chart.data = 
+			// Create chart instance
+			var chart = am4core.create("chartdiv", am4charts.PieChart);
 
-// Add and configure Series
-var pieSeries = chart.series.push(new am4charts.PieSeries());
-pieSeries.dataFields.value = "litres";
-pieSeries.dataFields.category = "country";
-pieSeries.slices.template.stroke = am4core.color("#fff");
-pieSeries.slices.template.strokeOpacity = 1;
+			// Add data
+			chart.data = data;
 
-// This creates initial animation
-pieSeries.hiddenState.properties.opacity = 1;
-pieSeries.hiddenState.properties.endAngle = -90;
-pieSeries.hiddenState.properties.startAngle = -90;
+			// Add and configure Series
+			var pieSeries = chart.series.push(new am4charts.PieSeries());
+			pieSeries.dataFields.value = "litres";
+			pieSeries.dataFields.category = "country";
+			pieSeries.slices.template.stroke = am4core.color("#fff");
+			pieSeries.slices.template.strokeOpacity = 1;
 
-chart.hiddenState.properties.radius = am4core.percent(0);
+			// This creates initial animation
+			pieSeries.hiddenState.properties.opacity = 1;
+			pieSeries.hiddenState.properties.endAngle = -90;
+			pieSeries.hiddenState.properties.startAngle = -90;
 
+			chart.hiddenState.properties.radius = am4core.percent(0);
 
-}); // end am4core.ready()
-}
+		}); // end am4core.ready()
+	}
 </script>
 
 <!-- HTML -->
 <div id="chartdiv"></div>
+

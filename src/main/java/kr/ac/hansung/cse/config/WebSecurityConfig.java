@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,17 +17,19 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebSecurity
+@DependsOn({"flyway"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	@Qualifier("userDetailsService")
 	private UserDetailsService userDetailsService;
 
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	};
-
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		

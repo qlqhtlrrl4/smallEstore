@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {
 		"kr.ac.hansung.cse.repository" }, transactionManagerRef = "jpatransactionManager")
-@ComponentScan(basePackages = { "kr.ac.hansung.cse.dao" })
+@ComponentScan(basePackages = { "kr.ac.hansung.cse.repository" })
 public class DaoConfig {
 	
 	@Autowired
@@ -39,7 +39,7 @@ public class DaoConfig {
 		prop.put("hibernate.format_sql", "false");
 		prop.put("hibernate.order_inserts", "true");
 		prop.put("hibernate.order_updates", "true");
-		prop.put("hibernate.jdbc.batch_size", 10);
+		prop.put("hibernate.jdbc.batch_size", 1000);
 		prop.put("hibernate.jdbc.batch_versioned_data", "true");
 
 		return prop;

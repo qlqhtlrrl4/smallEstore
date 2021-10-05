@@ -6,17 +6,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 import lombok.Data;
 
 @Data
 @Entity
+@TableGenerator(
+		name = "vaccination_seq_generator",
+		table = "vaccination_sequence",
+		pkColumnValue = "vaccination_seq",
+		valueColumnName = "next_val",
+		allocationSize = 1000)
 @Table(name = "vaccination")
 public class VaccinationData {
 	
 	@Id
 	@Column(name = "vaccin_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.TABLE, generator = "vaccination_seq_generator")
 	private int id;
 	
 	private int accumulatedFirstCnt; //전일까지 누적 통계1차

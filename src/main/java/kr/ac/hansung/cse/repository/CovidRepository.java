@@ -12,7 +12,7 @@ import kr.ac.hansung.cse.domain.CovidData;
 public interface CovidRepository extends JpaRepository<CovidData, Integer>{
 	
 	@Modifying
-	@Query(value = "truncate table covid", nativeQuery = true)
+	@Query(value = "truncate table covidhospital", nativeQuery = true)
 	void deleteAll(); 
 	
 	

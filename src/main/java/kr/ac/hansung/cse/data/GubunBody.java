@@ -2,17 +2,17 @@ package kr.ac.hansung.cse.data;
 
 import java.util.List;
 
-import kr.ac.hansung.cse.domain.CovidStatusData;
+import kr.ac.hansung.cse.domain.CovidGubunData;
 import lombok.Data;
 
 @Data
-public class Body {
+public class GubunBody {
 	
-	private List<CovidStatusData> items;
+	private List<CovidGubunData> items;
 	private int numOfRows;
 	private int pageNo;
 	private int totalCount;
 	
 	
-	
+
 }

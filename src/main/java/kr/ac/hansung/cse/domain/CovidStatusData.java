@@ -17,7 +17,7 @@ import lombok.Data;
 		table = "covidstatus_sequence",
 		pkColumnValue = "covidstatus_seq",
 		valueColumnName = "next_val",
-		allocationSize = 1)
+		allocationSize = 1000)
 @Table(name = "covidstatus")
 public class CovidStatusData {
 	

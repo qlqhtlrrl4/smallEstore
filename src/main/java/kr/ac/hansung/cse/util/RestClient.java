@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.gson.Gson;
 
-import kr.ac.hansung.cse.data.Response;
+import kr.ac.hansung.cse.data.CovidStatusResponse;
 
 @Component
 public class RestClient {
@@ -45,15 +45,15 @@ public class RestClient {
 
 	}
 
-	public Response parser(String url) {
+	public <T>Object parser(String url, Class<T> responseType) {
 
 		ResponseEntity<String> response1 = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
 		//System.out.println(response1.getBody());
 
 		ObjectMapper xmlMapper = new XmlMapper();
-		Response response = null;
+		Object response = null;
 		try {
-			response = xmlMapper.readValue(response1.getBody(), Response.class);
+			response = xmlMapper.readValue(response1.getBody(), responseType);
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
@@ -63,7 +63,7 @@ public class RestClient {
 			e.printStackTrace();
 		}
 		//System.out.println(response);
-
+		
 		return response;
 
 	}
